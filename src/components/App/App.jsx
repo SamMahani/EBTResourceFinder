@@ -4,6 +4,7 @@ import "./App.css";
 import StoreList from "../StoreList";
 import Search from "../Search";
 import DropdownFilter from "../DropdownFilter";
+import GoogleMaps from "../GoogleMaps/GoogleMaps.jsx";
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +17,9 @@ class App extends React.Component {
       foodbanks: [],
       snapoffices: [],
       wicoffices: [],
-      value: "stores"
+      value: "stores",
+      currLat: 40.70851,
+      currLong: -73.90896
     };
     this.getLocations = this.getLocations.bind(this);
     this.filterStoreByType = this.filterStoreByType.bind(this);
@@ -36,7 +39,9 @@ class App extends React.Component {
         this.filterStoreByType(nearbyStores);
         this.setState({
           nearbyStores,
-          filters: locations.data.filters
+          filters: locations.data.filters,
+          currLat: lat,
+          currLong: long
         });
       })
       .catch(err => {
@@ -84,7 +89,11 @@ class App extends React.Component {
           value={this.state.value}
           handleChange={this.handleChange}
         />
-        <section>map will go here</section>
+        <GoogleMaps
+          list={this.state[this.state.value]}
+          currLat={this.state.currLat}
+          currLong={this.state.currLong}
+        />
         <StoreList list={this.state[this.state.value]} />
       </div>
     );
