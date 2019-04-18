@@ -3,14 +3,28 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import GMA from "../../../GMA.json";
 export class MapContainer extends React.Component {
   render() {
+    let points = this.props.list.reduce((acc, store) => {
+      let lat = Number(store.latitude);
+      let lng = Number(store.longitude);
+      let coordinate = {
+        lat,
+        lng
+      };
+      acc.push(coordinate);
+      return acc;
+    }, []);
+    var bounds = new this.props.google.maps.LatLngBounds();
+    for (var i = 0; i < points.length; i++) {
+      bounds.extend(points[i]);
+    }
     return (
       <Map
         google={this.props.google}
-        initialCenter={{
+        center={{
           lat: this.props.currLat,
           lng: this.props.currLong
         }}
-        zoom={12}
+        bounds={bounds}
       >
         {this.props.list.map(store => {
           return (
