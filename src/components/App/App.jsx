@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import "./App.css";
+import StoreList from "../StoreList";
 
 class App extends React.Component {
   constructor(props) {
@@ -12,10 +13,12 @@ class App extends React.Component {
       markets: [],
       foodbanks: [],
       snapoffices: [],
-      wicoffices: []
+      wicoffices: [],
+      value: "stores"
     };
     this.getLocations = this.getLocations.bind(this);
     this.filterStoreByType = this.filterStoreByType.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -28,7 +31,7 @@ class App extends React.Component {
       .get(endpoint)
       .then(locations => {
         let nearbyStores = locations.data.stores;
-        // this.filterStoreByType(nearbyStores);
+        this.filterStoreByType(nearbyStores);
         this.setState({
           nearbyStores,
           filters: locations.data.filters
@@ -66,13 +69,23 @@ class App extends React.Component {
       wicoffices
     });
   }
+  handleChange(e) {
+    this.setState({ value: e.target.value });
+  }
 
   render() {
     return (
       <div>
         <header>EBT Resource Finder</header>
         <section>map will go here</section>
-        <section>list will go here</section>
+        <select value={this.state.value} onChange={this.handleChange}>
+          <option value="stores">store</option>
+          <option value="markets">market</option>
+          <option value="foodbanks">foodbank</option>
+          <option value="snapoffices">snapoffice</option>
+          <option value="wicoffices">wicoffice</option>
+        </select>
+        <StoreList list={this.state[this.state.value]} />
       </div>
     );
   }
