@@ -5,7 +5,6 @@ import StoreList from "../StoreList";
 import Search from "../Search";
 import DropdownFilter from "../DropdownFilter";
 import GoogleMaps from "../GoogleMaps/GoogleMaps.jsx";
-import GMA from "../../../GMA.json";
 
 class App extends React.Component {
   constructor(props) {
@@ -19,15 +18,15 @@ class App extends React.Component {
       snapoffices: [],
       wicoffices: [],
       value: "stores",
-      searchValue: "",
+
       currLat: 40.70851,
       currLong: -73.90896
     };
     this.getLocations = this.getLocations.bind(this);
     this.filterStoreByType = this.filterStoreByType.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleSearchValue = this.handleSearchValue.bind(this);
+
+    this.handleLatLongState = this.handleLatLongState.bind(this);
   }
 
   componentDidMount() {
@@ -87,30 +86,11 @@ class App extends React.Component {
     this.setState({ value: e.target.value });
   }
 
-  handleSearchValue(e) {
+  handleLatLongState(lat, lng) {
     this.setState({
-      searchValue: e.target.value
+      currLat: lat,
+      currLong: lng
     });
-  }
-
-  handleSubmit(e) {
-    e.preventDefault();
-    const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${
-      this.state.searchValue
-    }&key=${GMA.GMA}`;
-    axios
-      .get(endpoint)
-      .then(locData => {
-        const { lat, lng } = locData.data.results[0].geometry.location;
-        this.setState({
-          currLat: lat,
-          currLong: lng
-        });
-        this.getLocations();
-      })
-      .catch(err => {
-        console.log(err);
-      });
   }
 
   render() {
@@ -118,9 +98,8 @@ class App extends React.Component {
       <div>
         <header>EBT Resource Finder</header>
         <Search
-          handleSubmit={this.handleSubmit}
-          searchValue={this.state.searchValue}
-          handleSearchValue={this.handleSearchValue}
+          getLocations={this.getLocations}
+          handleLatLongState={this.handleLatLongState}
         />
         <DropdownFilter
           value={this.state.value}
