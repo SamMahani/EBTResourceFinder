@@ -5,6 +5,7 @@ import StoreList from "../StoreList";
 import Search from "../Search";
 import DropdownFilter from "../DropdownFilter";
 import GoogleMaps from "../GoogleMaps/GoogleMaps.jsx";
+import GMA from "../../../GMA.json";
 
 class App extends React.Component {
   constructor(props) {
@@ -18,20 +19,25 @@ class App extends React.Component {
       snapoffices: [],
       wicoffices: [],
       value: "stores",
+      searchValue: "",
       currLat: 40.70851,
       currLong: -73.90896
     };
     this.getLocations = this.getLocations.bind(this);
     this.filterStoreByType = this.filterStoreByType.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSearchValue = this.handleSearchValue.bind(this);
   }
 
   componentDidMount() {
     this.getLocations();
   }
 
-  getLocations(lat = 40.70851, long = -73.90896) {
-    const endpoint = `https://www.easyfoodstamps.com/stores?latitude=${lat}&longitude=${long}`;
+  getLocations() {
+    const endpoint = `https://www.easyfoodstamps.com/stores?latitude=${
+      this.state.currLat
+    }&longitude=${this.state.currLong}`;
     axios
       .get(endpoint)
       .then(locations => {
@@ -40,8 +46,8 @@ class App extends React.Component {
         this.setState({
           nearbyStores,
           filters: locations.data.filters,
-          currLat: lat,
-          currLong: long
+          currLat: this.state.currLat,
+          currLong: this.state.currLong
         });
       })
       .catch(err => {
@@ -76,15 +82,46 @@ class App extends React.Component {
       wicoffices
     });
   }
+
   handleChange(e) {
     this.setState({ value: e.target.value });
+  }
+
+  handleSearchValue(e) {
+    this.setState({
+      searchValue: e.target.value
+    });
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${
+      this.state.searchValue
+    }&key=${GMA.GMA}`;
+    axios
+      .get(endpoint)
+      .then(locData => {
+        const { lat, lng } = locData.data.results[0].geometry.location;
+        this.setState({
+          currLat: lat,
+          currLong: lng
+        });
+        this.getLocations();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
     return (
       <div>
         <header>EBT Resource Finder</header>
-        <Search />
+        <Search
+          handleSubmit={this.handleSubmit}
+          searchValue={this.state.searchValue}
+          handleSearchValue={this.handleSearchValue}
+        />
         <DropdownFilter
           value={this.state.value}
           handleChange={this.handleChange}
