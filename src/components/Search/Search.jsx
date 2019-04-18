@@ -1,13 +1,18 @@
 import React from "react";
 
-const Search = () => {
+const Search = ({ handleSubmit, searchValue, handleSearchValue }) => {
   return (
     <form>
       <label>
         Zip:
-        <input type="text" name="zip" />
+        <input
+          type="text"
+          value={searchValue}
+          onChange={handleSearchValue}
+          name="zip"
+        />
       </label>
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Submit" onClick={handleSubmit} />
     </form>
   );
 };
