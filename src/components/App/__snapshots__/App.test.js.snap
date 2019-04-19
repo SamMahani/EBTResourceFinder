@@ -2,8 +2,87 @@
 
 exports[`renders 1`] = `
 <DocumentFragment>
-  <div>
-    Hello, React is working
+  <div
+    class="appWrapper"
+  >
+    <header
+      class="title"
+      data-testid="titleTest"
+    >
+      EBT Resource Finder
+    </header>
+    <div
+      class="searchWrapper"
+    >
+      <form>
+        <label
+          class="labelWrapper"
+        >
+          Zip: 
+          <input
+            class="inputBar"
+            name="zip"
+            type="text"
+            value=""
+          />
+        </label>
+        <input
+          class="submitButton"
+          type="submit"
+          value="Submit"
+        />
+      </form>
+    </div>
+    <div
+      class="dropdownWrapper"
+    >
+      <select
+        class="dropdown"
+      >
+        <option
+          value="markets"
+        >
+          market
+        </option>
+        <option
+          value="foodbanks"
+        >
+          foodbank
+        </option>
+        <option
+          value="snapoffices"
+        >
+          snapoffice
+        </option>
+        <option
+          value="wicoffices"
+        >
+          wicoffice
+        </option>
+        <option
+          value="stores"
+        >
+          store
+        </option>
+      </select>
+    </div>
+    <section
+      class="selectedMarkerWrap"
+    >
+      <section />
+    </section>
+    <section
+      class="googleMapsWrapper"
+    >
+      <div>
+        Loading...
+      </div>
+    </section>
+    <div
+      class="storeListWrapper"
+    >
+      <section />
+    </div>
   </div>
 </DocumentFragment>
 `;
