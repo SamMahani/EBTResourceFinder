@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<DocumentFragment>
+  <select
+    class="dropdown"
+  >
+    <option
+      value="markets"
+    >
+      market
+    </option>
+    <option
+      value="foodbanks"
+    >
+      foodbank
+    </option>
+    <option
+      value="snapoffices"
+    >
+      snapoffice
+    </option>
+    <option
+      value="wicoffices"
+    >
+      wicoffice
+    </option>
+    <option
+      value="stores"
+    >
+      store
+    </option>
+  </select>
+</DocumentFragment>
+`;
