@@ -1,0 +1,12 @@
+.selectedWrapper {
+  padding: 1em;
+  background-color: var(--highlight);
+  border: 1px solid var(--borderColor);
+  box-shadow: 3px 3px 5px 6px var(--borderColor);
+  color: white;
+}
+
+.selectedMarkerTitle {
+  font-size: 1.5em;
+  font-weight: 600;
+}
