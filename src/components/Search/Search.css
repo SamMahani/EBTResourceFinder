@@ -1,0 +1,21 @@
+.labelWrapper {
+  padding: 1em;
+  font-weight: 600;
+}
+
+.inputBar {
+  outline: none;
+  height: 1.5em;
+}
+
+.submitButton {
+  color: var(--mainLight);
+  background-color: var(--mainDark);
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 6px;
+  text-align: center;
+  outline: none;
+  font-size: 1em;
+  font-weight: 300;
+}
