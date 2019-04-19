@@ -16,6 +16,10 @@
 - Jest
 - react-testing-library
 
+## Trello
+
+[My Trello board for this project: ](https://trello.com/b/ZUcggjmj/ebt-resource-finder-project)
+
 ## Development
 
 ### Setup Instructions
