@@ -1,10 +1,11 @@
+import "./App.css";
 import React from "react";
 import axios from "axios";
-import "./App.css";
 import StoreList from "../StoreList";
 import Search from "../Search";
 import DropdownFilter from "../DropdownFilter";
 import GoogleMaps from "../GoogleMaps/GoogleMaps.jsx";
+import SelectedResource from "../SelectedResource";
 
 class App extends React.Component {
   constructor(props) {
@@ -17,16 +18,15 @@ class App extends React.Component {
       foodbanks: [],
       snapoffices: [],
       wicoffices: [],
-      value: "stores",
-
+      value: "markets",
       currLat: 40.70851,
       currLong: -73.90896
     };
     this.getLocations = this.getLocations.bind(this);
     this.filterStoreByType = this.filterStoreByType.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
     this.handleLatLongState = this.handleLatLongState.bind(this);
+    this.handleSelectedMarker = this.handleSelectedMarker.bind(this);
   }
 
   componentDidMount() {
@@ -93,24 +93,45 @@ class App extends React.Component {
     });
   }
 
+  handleSelectedMarker(selectedMarker) {
+    this.setState({
+      selectedMarker
+    });
+  }
+
   render() {
     return (
-      <div>
-        <header>EBT Resource Finder</header>
-        <Search
-          getLocations={this.getLocations}
-          handleLatLongState={this.handleLatLongState}
-        />
-        <DropdownFilter
-          value={this.state.value}
-          handleChange={this.handleChange}
-        />
-        <GoogleMaps
-          list={this.state[this.state.value]}
-          currLat={this.state.currLat}
-          currLong={this.state.currLong}
-        />
-        <StoreList list={this.state[this.state.value]} />
+      <div className="appWrapper">
+        <header data-testid="titleTest" className="title">
+          EBT Resource Finder
+        </header>
+        <div className="searchWrapper">
+          <Search
+            getLocations={this.getLocations}
+            handleLatLongState={this.handleLatLongState}
+          />
+        </div>
+        <div className="dropdownWrapper">
+          <DropdownFilter
+            value={this.state.value}
+            handleChange={this.handleChange}
+          />
+        </div>
+        <section className="selectedMarkerWrap">
+          <SelectedResource selectedMarker={this.state.selectedMarker} />
+        </section>
+        <section className="googleMapsWrapper">
+          <GoogleMaps
+            handleSelectedMarker={this.handleSelectedMarker}
+            list={this.state[this.state.value]}
+            currLat={this.state.currLat}
+            currLong={this.state.currLong}
+          />
+        </section>
+        {/* <div>{this.state.selectedMarker.name}</div> */}
+        <div className="storeListWrapper">
+          <StoreList list={this.state[this.state.value]} />
+        </div>
       </div>
     );
   }
