@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<DocumentFragment>
+  <form>
+    <label
+      class="labelWrapper"
+    >
+      Zip: 
+      <input
+        class="inputBar"
+        name="zip"
+        type="text"
+        value=""
+      />
+    </label>
+    <input
+      class="submitButton"
+      type="submit"
+      value="Submit"
+    />
+  </form>
+</DocumentFragment>
+`;
