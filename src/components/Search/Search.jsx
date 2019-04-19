@@ -1,6 +1,7 @@
 import React from "react";
+import "./Search.css";
 import axios from "axios";
-import GMA from "../../../GMA.json";
+require("dotenv").config();
 
 class Search extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class Search extends React.Component {
     e.preventDefault();
     const endpoint = `https://maps.googleapis.com/maps/api/geocode/json?address=${
       this.state.searchValue
-    }&key=${GMA.GMA}`;
+    }&key=${process.env.GMA}`;
     axios
       .get(endpoint)
       .then(locData => {
@@ -38,16 +39,22 @@ class Search extends React.Component {
   render() {
     return (
       <form>
-        <label>
-          Zip:
+        <label className="labelWrapper">
+          {`Zip: `}
           <input
+            className="inputBar"
             type="text"
             value={this.state.searchValue}
             onChange={this.handleSearchValue}
             name="zip"
           />
         </label>
-        <input type="submit" value="Submit" onClick={this.handleSubmit} />
+        <input
+          className="submitButton"
+          type="submit"
+          value="Submit"
+          onClick={this.handleSubmit}
+        />
       </form>
     );
   }
