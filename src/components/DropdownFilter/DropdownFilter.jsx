@@ -1,12 +1,13 @@
 import React from "react";
+import "./DropdownFilter.css";
 
 const DropdownFilter = ({ value, handleChange }) => (
-  <select value={value} onChange={handleChange}>
-    <option value="stores">store</option>
+  <select className="dropdown" value={value} onChange={handleChange}>
     <option value="markets">market</option>
     <option value="foodbanks">foodbank</option>
     <option value="snapoffices">snapoffice</option>
     <option value="wicoffices">wicoffice</option>
+    <option value="stores">store</option>
   </select>
 );
 
