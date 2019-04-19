@@ -1,18 +1,25 @@
 import React from "react";
+import "./StoreList.css";
 
 const StoreList = ({ list }) => {
   return (
-    <div>
-      <ul>
-        {list.map(store => {
-          return (
-            <li key={`${store.latitude}_${store.longitude}${Math.random()}`}>
-              {store.store_name}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <section>
+      {list
+        ? list.map(store => (
+            <article
+              className="storeWrapper"
+              key={`${store.latitude}_${store.longitude}${Math.random()}`}
+            >
+              <header data-testid="storeNameTest" className="storeNameHeader">
+                {store.store_name}
+              </header>
+              <div className="address">{store.address}</div>
+              <div className="city">{store.city}</div>
+              <div />
+            </article>
+          ))
+        : null}
+    </section>
   );
 };
 
