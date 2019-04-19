@@ -1,20 +1,30 @@
 import React from "react";
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-import GMA from "../../../GMA.json";
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+require("dotenv").config();
+
 export class MapContainer extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedPlace: {}
+    };
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+  }
+
+  onMarkerClick(selectedPlace) {
+    this.props.handleSelectedMarker(selectedPlace);
+  }
+
   render() {
     let points = this.props.list.reduce((acc, store) => {
       let lat = Number(store.latitude);
       let lng = Number(store.longitude);
-      let coordinate = {
-        lat,
-        lng
-      };
+      let coordinate = { lat, lng };
       acc.push(coordinate);
       return acc;
     }, []);
     var bounds = new this.props.google.maps.LatLngBounds();
-    for (var i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length; i++) {
       bounds.extend(points[i]);
     }
     return (
@@ -29,26 +39,31 @@ export class MapContainer extends React.Component {
         {this.props.list.map(store => {
           return (
             <Marker
-              title={store.store_name}
+              onClick={this.onMarkerClick}
               name={store.store_name}
+              store={store}
+              title={store.store_name}
               position={{ lat: store.latitude, lng: store.longitude }}
+              icon={
+                store.icon
+                  ? {
+                      url: store.icon,
+                      anchor: new google.maps.Point(32, 32),
+                      scaledSize: new google.maps.Size(24, 24)
+                    }
+                  : null
+              }
               key={`${store.address}_${store.latitude}_${
                 store.longitude
               }${Math.random()}`}
             />
           );
         })}
-
-        {/* <InfoWindow onClose={this.onInfoWindowClose}>
-          <div>
-            <h1 />
-          </div>
-        </InfoWindow> */}
       </Map>
     );
   }
 }
 
 export default GoogleApiWrapper({
-  apiKey: GMA.GMA
+  apiKey: process.env.GMA
 })(MapContainer);
