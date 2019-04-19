@@ -128,7 +128,6 @@ class App extends React.Component {
             currLong={this.state.currLong}
           />
         </section>
-        {/* <div>{this.state.selectedMarker.name}</div> */}
         <div className="storeListWrapper">
           <StoreList list={this.state[this.state.value]} />
         </div>
