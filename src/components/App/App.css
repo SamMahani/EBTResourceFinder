@@ -1,3 +1,66 @@
+:root {
+  --mainDark: #3d3d3f;
+  --mainLight: #f6f5f3;
+  --mainColorful: #7dce94;
+  --whitish: #f9f8fd;
+  --borderColor: #ccd1cb;
+  --highlight: #a206c9;
+}
+
 body {
-  background: rgb(226, 226, 226);
+  background: var(--mainLight);
+}
+
+.appWrapper {
+  display: grid;
+}
+
+.title {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+  font-size: 2em;
+  font-weight: 800;
+  background: var(--mainColorful);
+  color: var(--mainDark);
+  padding: 1em 1em 1em 0.5em;
+}
+
+.searchWrapper {
+  grid-column: 1 / 2;
+  grid-row: 2 / 3;
+  padding: 1em;
+  color: var(--mainDark);
+  background-color: var(--whitish);
+}
+
+.dropdownWrapper {
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  padding: 1em;
+  background-color: var(--whitish);
+}
+
+.selectedMarkerWrap {
+  grid-column: 1 / 3;
+  grid-row: 3 / 4;
+  background: var(--mainLight);
+  padding: 1em;
+  color: var(--mainDark);
+}
+
+.googleMapsWrapper {
+  grid-column: 1 / 3;
+  grid-row: 4/ 10;
+}
+
+.googleMapsWrapper div:first-child {
+  position: relative;
+  width: 100%;
+  height: 95vh;
+}
+
+.storeListWrapper {
+  grid-column: 1 / 3;
+  grid-row: 10 / 15;
+  padding: 2em 1em;
 }
