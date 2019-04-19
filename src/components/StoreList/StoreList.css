@@ -1,0 +1,11 @@
+.storeWrapper {
+  padding: 1em;
+  border-bottom: 1px solid var(--borderColor);
+  background-color: var(--whitish);
+  box-shadow: 3px 3px 5px 6px var(--borderColor);
+}
+
+.storeNameHeader {
+  font-size: 1.5em;
+  font-weight: 600;
+}
